@@ -1,0 +1,10 @@
+﻿  hooks.cpp
+  main.cpp
+  menu.cpp
+  zgui.cpp
+  interfaces.cpp
+  hook.cpp
+  render.cpp
+  utilities.cpp
+  Generating Code...
+  csgo-cheat.vcxproj -> C:\Users\James Henson\sdk\.\output\debug\csgo-cheat.dll
