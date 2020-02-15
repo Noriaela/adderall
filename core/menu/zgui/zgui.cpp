@@ -17,15 +17,15 @@ static struct {
 	color window_border_color{ 10, 10, 10, 255 };
 	color window_background{ 40, 40, 40, 255 };
 
-	color control_outline{ 23, 23, 30, 255 };
-	color control_active_or_clicked{ 108, 92, 231, 255 };
-	color control_idle{ 62, 62, 72, 255 };
+	color control_outline{ 30, 23, 23, 255 };
+	color control_active_or_clicked{ 231, 92, 92, 255 };
+	color control_idle{ 72, 62, 62, 255 };
 
 	color color_groupbox_bg{ 50, 50, 50, 255 };
 	color color_text{ 203, 203, 203, 255 };
-	color color_text_dimmer{ 99, 110, 114, 255 };
-	color color_slider{ 108, 92, 231, 255 };
-	color color_combo_bg{ 108, 92, 231, 255 };
+	color color_text_dimmer{ 114, 99, 99, 255 };
+	color color_slider{ 231, 92, 92, 255 };
+	color color_combo_bg{ 231, 92, 92, 255 };
 } global_colors;
 
 static struct {
