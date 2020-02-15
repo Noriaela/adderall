@@ -10,7 +10,7 @@ std::unique_ptr<vmt_hook> hooks::renderview_hook;
 std::unique_ptr<vmt_hook> hooks::surface_hook;
 WNDPROC hooks::wndproc_original = NULL;
 
-c_settings settings;
+c_settings set;
 
 void hooks::initialize( ) {
 	client_hook = std::make_unique<vmt_hook>( );
@@ -60,10 +60,10 @@ void hooks::shutdown( ) {
 	SetWindowLongPtrA( FindWindow( "Valve001", NULL ), GWL_WNDPROC, reinterpret_cast< LONG >( wndproc_original ) );
 }
 
-bool __stdcall hooks::create_move( float frame_time, c_usercmd* user_cmd ) {
-	static auto original_fn = reinterpret_cast< create_move_fn >( clientmode_hook->get_original( 24 ) )( interfaces::clientmode, frame_time, user_cmd );
+bool __stdcall hooks::create_move( float frame_time, c_usercmd* cmd ) {
+	static auto original_fn = reinterpret_cast< create_move_fn >( clientmode_hook->get_original( 24 ) )( interfaces::clientmode, frame_time, cmd );
 	
-	if ( !user_cmd || !user_cmd->command_number )
+	if ( !cmd || !cmd->command_number )
 		return original_fn;
 
 	if ( !interfaces::entity_list->get_client_entity( interfaces::engine->get_local_player( ) ) )
@@ -103,7 +103,7 @@ void __stdcall hooks::scene_end( ) {
 void __stdcall hooks::lock_cursor() {
 	static auto original_fn = reinterpret_cast<lock_cursor_fn>(surface_hook->get_original(67));
 
-	if (settings.menu_opened) {
+	if (set.menu_opened) {
 		interfaces::surface->unlock_cursor();
 		return;
 	}
@@ -120,18 +120,18 @@ LRESULT __stdcall hooks::wndproc(HWND hwnd, UINT message, WPARAM wparam, LPARAM 
 	else if (pressed && !GetAsyncKeyState(VK_INSERT)) {
 		pressed = false;
 
-		settings.menu_opened = !settings.menu_opened;
+		set.menu_opened = !set.menu_opened;
 	}
 
-	if (settings.menu_opened) {
+	if (set.menu_opened) {
 		interfaces::inputsystem->enable_input(false);
 
 	}
-	else if (!settings.menu_opened) {
+	else if (!set.menu_opened) {
 		interfaces::inputsystem->enable_input(true);
 	}
 
-	if (settings.menu_opened)
+	if (set.menu_opened)
 		return true;
 
 	return CallWindowProcA(wndproc_original, hwnd, message, wparam, lparam);
