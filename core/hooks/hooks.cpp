@@ -61,7 +61,9 @@ void hooks::shutdown( ) {
 }
 
 bool __stdcall hooks::create_move( float frame_time, c_usercmd* cmd ) {
-	static auto original_fn = reinterpret_cast< create_move_fn >( clientmode_hook->get_original( 24 ) )( interfaces::clientmode, frame_time, cmd );
+	static auto original_fn = reinterpret_cast<create_move_fn>(clientmode_hook->get_original(24));
+	auto local_player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(interfaces::engine->get_local_player()));
+	original_fn(interfaces::clientmode, frame_time, cmd);
 	
 	if ( !cmd || !cmd->command_number )
 		return original_fn;
