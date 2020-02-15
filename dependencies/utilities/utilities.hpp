@@ -19,5 +19,8 @@ namespace utilities {
 	namespace game {
 		void* capture_interface( const char* mod, const char* iface );
 	}
+
+	void load_named_sky(const char* sky_name);
+
 	std::uint8_t* pattern_scan( void* module, const char* signature );
 }

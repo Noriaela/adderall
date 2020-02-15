@@ -56,3 +56,9 @@ void* utilities::game::capture_interface( const char* mod, const char* iface ) {
 
 	return iface_addr;
 }
+
+void utilities::load_named_sky(const char* sky_name) {
+	using Fn = void(__fastcall*)(const char*);
+	static auto load_named_sky_fn = reinterpret_cast<Fn>(utilities::pattern_scan(GetModuleHandleA("engine.dll"), "55 8B EC 81 EC ? ? ? ? 56 57 8B F9 C7 45"));
+	load_named_sky_fn(sky_name);
+}

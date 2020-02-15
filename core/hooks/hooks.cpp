@@ -71,7 +71,18 @@ bool __stdcall hooks::create_move( float frame_time, c_usercmd* cmd ) {
 	if ( !interfaces::entity_list->get_client_entity( interfaces::engine->get_local_player( ) ) )
 		return original_fn;
 
+	// misc
 	movement.do_bhop(cmd);
+
+	// clamping movement
+	cmd->forward_move = std::clamp(cmd->forward_move, -450.0f, 450.0f);
+	cmd->side_move = std::clamp(cmd->side_move, -450.0f, 450.0f);
+	cmd->up_move = std::clamp(cmd->up_move, -450.0f, 450.0f);
+
+	// clamping angles
+	cmd->view_angles.x = std::clamp(cmd->view_angles.x, -89.0f, 89.0f);
+	cmd->view_angles.y = std::clamp(cmd->view_angles.y, -180.0f, 180.0f);
+	cmd->view_angles.z = 0.0f;
 
 	return false;
 }

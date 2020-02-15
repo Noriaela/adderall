@@ -129,9 +129,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="core\features\aimbot\aimbot.cpp" />
+    <ClCompile Include="core\features\aimbot\autowall.cpp" />
+    <ClCompile Include="core\features\antiaim\antiaim.cpp" />
     <ClCompile Include="core\features\backtrack\backtrack.cpp" />
+    <ClCompile Include="core\features\misc\misc.cpp" />
     <ClCompile Include="core\features\misc\movement.cpp" />
     <ClCompile Include="core\features\skinchanger\glovechanger.cpp" />
+    <ClCompile Include="core\features\skinchanger\skin_parser.cpp" />
     <ClCompile Include="core\features\skinchanger\skinchanger.cpp" />
     <ClCompile Include="core\features\visuals\nightmode.cpp" />
     <ClCompile Include="core\features\visuals\visuals.cpp" />
@@ -148,11 +152,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\features\aimbot\aimbot.h" />
+    <ClInclude Include="core\features\aimbot\autowall.h" />
+    <ClInclude Include="core\features\antiaim\antiaim.h" />
     <ClInclude Include="core\features\backtrack\backtrack.h" />
     <ClInclude Include="core\features\config.h" />
+    <ClInclude Include="core\features\misc\misc.h" />
     <ClInclude Include="core\features\misc\movement.h" />
     <ClInclude Include="core\features\skinchanger\glovechanger.h" />
     <ClInclude Include="core\features\skinchanger\skinchanger.h" />
+    <ClInclude Include="core\features\skinchanger\skin_parser.h" />
     <ClInclude Include="core\features\visuals\nightmode.h" />
     <ClInclude Include="core\features\visuals\visuals.h" />
     <ClInclude Include="core\hooks\hooks.hpp" />
