@@ -84,7 +84,7 @@ public:
 		return InsertBefore( m_Size );
 	}
 
-	void SetSize( int size ) {
+	void set_size( int size ) {
 		m_Size = size;
 	}
 

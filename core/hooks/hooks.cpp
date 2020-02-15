@@ -36,7 +36,7 @@ void hooks::initialize( ) {
 
 	wndproc_original = reinterpret_cast< WNDPROC >( SetWindowLongPtrA( FindWindow( "Valve001", NULL ), GWL_WNDPROC, reinterpret_cast< LONG >( wndproc ) ) );
 
-	interfaces::console->get_convar( "viewmodel_fov" )->callbacks.SetSize( 0 );
+	interfaces::console->get_convar( "viewmodel_fov" )->callbacks.set_size( 0 );
 	interfaces::console->get_convar( "mat_postprocess_enable" )->set_value( 0 );
 	interfaces::console->get_convar( "crosshair" )->set_value( 1 );
 
