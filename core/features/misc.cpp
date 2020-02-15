@@ -4,7 +4,7 @@
 
 c_misc misc;
 
-static bool should_jump = false;
+static bool should_jump = false;//Temp spot till I add more misc features
 static bool should_fake = false;
 
 void c_misc::do_bhop(c_usercmd* cmd) {
