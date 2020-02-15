@@ -8,4 +8,4 @@ public:
 	bool do_bhop = false;
 };
 
-extern c_settings settings;
+extern c_settings set;
