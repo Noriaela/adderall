@@ -2,12 +2,12 @@
 
 #include "../../../dependencies/common_includes.hpp"
 
-c_movememnt movememnt;
+c_movement movement;
 
 static bool should_jump = false;//Temp spot till I add more misc features
 static bool should_fake = false;
 
-void c_movememnt::do_bhop(c_usercmd* cmd) {
+void c_movement::do_bhop(c_usercmd* cmd) {
 	if (!set.do_bhop)
 		return;
 
