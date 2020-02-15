@@ -1,6 +1,24 @@
 #pragma once
 #include "collideable.hpp"
 
+enum move_type {
+	movetype_none = 0,
+	movetype_isometric,
+	movetype_walk,
+	movetype_step,
+	movetype_fly,
+	movetype_flygravity,
+	movetype_vphysics,
+	movetype_push,
+	movetype_noclip,
+	movetype_ladder,
+	movetype_observer,
+	movetype_custom,
+	movetype_last = movetype_custom,
+	movetype_max_bits = 4,
+	max_movetype
+};
+
 enum entity_flags {
 	fl_onground = ( 1 << 0 ),
 	fl_ducking = ( 1 << 1 ),
@@ -263,5 +281,9 @@ public:
 
 	int* weapons( ) {
 		return ( int* ) ( uintptr_t( this ) + 0x2DE8 );
+	}
+
+	int move_type() {
+		return *reinterpret_cast<int*> (reinterpret_cast<uintptr_t>(this) + 0x25C);
 	}
 };
