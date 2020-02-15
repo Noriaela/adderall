@@ -127,11 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="core\features\misc.cpp" />
     <ClCompile Include="core\hooks\hooks.cpp" />
     <ClCompile Include="core\menu\menu.cpp" />
     <ClCompile Include="core\menu\zgui\zgui.cpp" />
     <ClCompile Include="dependencies\interfaces\interfaces.cpp" />
-    <ClCompile Include="dependencies\utilities\netvars.cpp" />
+    <ClCompile Include="dependencies\utilities\netvar_manager.cpp" />
     <ClCompile Include="dependencies\utilities\render.cpp" />
     <ClCompile Include="dependencies\utilities\utilities.cpp" />
     <ClCompile Include="dependencies\utilities\hook.cpp" />
@@ -140,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\features\config.h" />
+    <ClInclude Include="core\features\misc.h" />
     <ClInclude Include="core\hooks\hooks.hpp" />
     <ClInclude Include="core\menu\menu.hpp" />
     <ClInclude Include="core\menu\zgui\zgui.hpp" />
@@ -165,7 +167,7 @@
     <ClInclude Include="dependencies\interfaces\ivmodelinfo.hpp" />
     <ClInclude Include="dependencies\interfaces\ivmodelrender.hpp" />
     <ClInclude Include="dependencies\utilities\fnv.hpp" />
-    <ClInclude Include="dependencies\utilities\netvars.hpp" />
+    <ClInclude Include="dependencies\utilities\netvar_manager.hpp" />
     <ClInclude Include="dependencies\utilities\render.hpp" />
     <ClInclude Include="dependencies\utilities\utilities.hpp" />
     <ClInclude Include="dependencies\utilities\hook.hpp" />
