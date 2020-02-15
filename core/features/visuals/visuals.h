@@ -5,6 +5,7 @@
 class c_visuals {
 
 public:
+	void run();
 
 private:
 

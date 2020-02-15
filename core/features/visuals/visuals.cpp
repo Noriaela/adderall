@@ -4,4 +4,6 @@
 
 c_visuals visuals;
 
-// for esp/visuals
+void c_visuals::run() {
+
+}

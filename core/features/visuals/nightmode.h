@@ -4,6 +4,9 @@
 class c_nightmode {
 
 public:
+	void run_nightmode();
+	void apply_nightmode();
+	void remove_nightmode();
 
 };
 
