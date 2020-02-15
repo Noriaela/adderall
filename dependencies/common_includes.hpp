@@ -36,4 +36,10 @@
 
 // Features
 #include "../core/features/config.h"
-#include "../core/features/misc/misc.h"
+#include "../core/features/aimbot/aimbot.h"
+#include "../core/features/backtrack/backtrack.h"
+#include "../core/features/misc/movement.h"
+#include "../core/features/skinchanger/glovechanger.h"
+#include "../core/features/skinchanger/skinchanger.h"
+#include "../core/features/visuals/nightmode.h"
+#include "../core/features/visuals/visuals.h"
