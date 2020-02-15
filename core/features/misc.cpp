@@ -16,7 +16,8 @@ void c_misc::do_bhop(c_usercmd* cmd) {
 	if (!local_player)
 		return;
 	
-	// Add check for different movetypes
+	if (local_player->move_type() == movetype_ladder || local_player->move_type() == movetype_noclip)
+		return;
 
 	if (should_fake && !should_jump) {
 		cmd->buttons |= in_jump;
