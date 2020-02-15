@@ -2,11 +2,11 @@
 
 #include "../../dependencies/common_includes.hpp"
 
-class c_misc {
+class c_movememnt {
 
 public:
 
 	void do_bhop(c_usercmd* cmd);
 };
 
-extern c_misc misc;
+extern c_movememnt movememnt;

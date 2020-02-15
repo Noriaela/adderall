@@ -1,13 +1,13 @@
-#include "misc.h"
+#include "movement.h"
 
-#include "../../dependencies/common_includes.hpp"
+#include "../../../dependencies/common_includes.hpp"
 
-c_misc misc;
+c_movememnt movememnt;
 
 static bool should_jump = false;//Temp spot till I add more misc features
 static bool should_fake = false;
 
-void c_misc::do_bhop(c_usercmd* cmd) {
+void c_movememnt::do_bhop(c_usercmd* cmd) {
 	if (!set.do_bhop)
 		return;
 
