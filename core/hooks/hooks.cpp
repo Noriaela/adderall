@@ -71,7 +71,7 @@ bool __stdcall hooks::create_move( float frame_time, c_usercmd* cmd ) {
 	if ( !interfaces::entity_list->get_client_entity( interfaces::engine->get_local_player( ) ) )
 		return original_fn;
 
-	misc.do_bhop(cmd);
+	movement.do_bhop(cmd);
 
 	return false;
 }
