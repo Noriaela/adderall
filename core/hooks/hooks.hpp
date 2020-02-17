@@ -18,6 +18,7 @@ namespace hooks {
 	using lock_cursor_fn = void(__thiscall*)(void*);
 
 	bool __stdcall create_move( float frame_time, c_usercmd* cmd );
+	float __stdcall viewmodel_fov();
 	void __stdcall frame_stage_notify( int frame_stage );
 	void __stdcall paint_traverse( unsigned int panel, bool force_repaint, bool allow_force );
 	void __stdcall scene_end( );

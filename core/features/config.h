@@ -3,27 +3,39 @@
 class c_settings
 {
 public:
-	bool menu_opened = false;
 
-	// aimbot
-	bool do_aimbot = false;
+	class c_menu {
+	public:
+		bool menu_opened = false;
+		int menu_toggle_key = VK_INSERT;
+	}menu;
 
-	// anti-aim
-	bool do_antiaim = false;
+	class c_aimbot {
+	public:
+		bool aimbot_enabled;
+	}aim;
 
-	// backtrack
+	class c_antiaim {
+	public:
+		bool antiaim_enabled;
+	}antiaim;
+	
+	class c_visuals {
+	public:
+		bool visuals_enabled;
+	}vis;
 
-	// misc
-	bool do_bhop = false;
-
-	// skinchanger
-	bool skinchanger_enable{ false };
-	bool glovechanger_enabled = false;
-
-	// visuals
-	bool do_visuals = false;
-
-	// colors
+	class c_misc {
+	public:
+		bool bhop;
+		int viewmodel_fov;
+	}misc;
+	
+	class c_colors {
+	public:
+		color t_box;
+		color ct_box;
+	}colors;
 
 };
 

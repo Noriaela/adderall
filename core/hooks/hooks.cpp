@@ -24,6 +24,7 @@ void hooks::initialize( ) {
 
 	clientmode_hook->setup( interfaces::clientmode );
 	clientmode_hook->hook_index( 24, reinterpret_cast< void* >( create_move ) );
+	clientmode_hook->hook_index(35, reinterpret_cast<void*>(viewmodel_fov));
 
 	panel_hook->setup( interfaces::panel );
 	panel_hook->hook_index( 41, reinterpret_cast< void* >( paint_traverse ) );
@@ -36,9 +37,12 @@ void hooks::initialize( ) {
 
 	wndproc_original = reinterpret_cast< WNDPROC >( SetWindowLongPtrA( FindWindow( "Valve001", NULL ), GWL_WNDPROC, reinterpret_cast< LONG >( wndproc ) ) );
 
-	interfaces::console->get_convar( "viewmodel_fov" )->callbacks.set_size( 0 );
-	interfaces::console->get_convar( "mat_postprocess_enable" )->set_value( 0 );
-	interfaces::console->get_convar( "crosshair" )->set_value( 1 );
+	interfaces::console->get_convar("crosshair")->set_value(1);
+	interfaces::console->get_convar("viewmodel_fov")->callbacks.set_size(false);
+	interfaces::console->get_convar("viewmodel_offset_x")->callbacks.set_size(false);
+	interfaces::console->get_convar("viewmodel_offset_y")->callbacks.set_size(false);
+	interfaces::console->get_convar("viewmodel_offset_z")->callbacks.set_size(false);
+	interfaces::console->get_convar("mat_postprocess_enable")->set_value(0);
 
 	render::setup_fonts( );
 
@@ -87,6 +91,16 @@ bool __stdcall hooks::create_move( float frame_time, c_usercmd* cmd ) {
 	return false;
 }
 
+float __stdcall hooks::viewmodel_fov() {
+	auto local_player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(interfaces::engine->get_local_player()));
+
+	if (local_player && local_player->is_alive())
+		return 68.f + set.misc.viewmodel_fov;
+	else
+		return 68.f;
+
+}
+
 void __stdcall hooks::frame_stage_notify( int frame_stage ) {
 	reinterpret_cast< frame_stage_notify_fn >( client_hook->get_original( 37 ) )( interfaces::client, frame_stage );
 }
@@ -118,7 +132,7 @@ void __stdcall hooks::scene_end( ) {
 void __stdcall hooks::lock_cursor() {
 	static auto original_fn = reinterpret_cast<lock_cursor_fn>(surface_hook->get_original(67));
 
-	if (set.menu_opened) {
+	if (set.menu.menu_opened) {
 		interfaces::surface->unlock_cursor();
 		return;
 	}
@@ -129,24 +143,24 @@ void __stdcall hooks::lock_cursor() {
 LRESULT __stdcall hooks::wndproc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
 	static bool pressed = false;
 
-	if (!pressed && GetAsyncKeyState(VK_INSERT)) {
+	if (!pressed && GetAsyncKeyState(set.menu.menu_toggle_key)) {
 		pressed = true;
 	}
-	else if (pressed && !GetAsyncKeyState(VK_INSERT)) {
+	else if (pressed && !GetAsyncKeyState(set.menu.menu_toggle_key)) {
 		pressed = false;
 
-		set.menu_opened = !set.menu_opened;
+		set.menu.menu_opened = !set.menu.menu_opened;
 	}
 
-	if (set.menu_opened) {
+	if (set.menu.menu_opened) {
 		interfaces::inputsystem->enable_input(false);
 
 	}
-	else if (!set.menu_opened) {
+	else if (!set.menu.menu_opened) {
 		interfaces::inputsystem->enable_input(true);
 	}
 
-	if (set.menu_opened)
+	if (set.menu.menu_opened)
 		return true;
 
 	return CallWindowProcA(wndproc_original, hwnd, message, wparam, lparam);

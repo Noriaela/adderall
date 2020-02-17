@@ -286,4 +286,8 @@ public:
 	int move_type() {
 		return *reinterpret_cast<int*> (reinterpret_cast<uintptr_t>(this) + 0x25C);
 	}
+
+	bool is_alive() {
+		return life_state() == 0;
+	}
 };

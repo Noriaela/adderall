@@ -250,6 +250,4 @@ namespace zgui {
 	ZGUI_API void same_line(float x_axis = -1) noexcept;
 
 	ZGUI_API void backup_line() noexcept;
-
-	ZGUI_API void color_picker(const char* id, color& value) noexcept;
 }

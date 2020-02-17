@@ -4,11 +4,11 @@
 
 c_movement movement;
 
-static bool should_jump = false;//Temp spot till I add more misc features
+static bool should_jump = false;
 static bool should_fake = false;
 
 void c_movement::do_bhop(c_usercmd* cmd) {
-	if (!set.do_bhop)
+	if (!set.misc.bhop)
 		return;
 
 	auto local_player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(interfaces::engine->get_local_player()));

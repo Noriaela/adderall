@@ -5,7 +5,6 @@
 class c_movement {
 
 public:
-
 	void do_bhop(c_usercmd* cmd);
 };
 
