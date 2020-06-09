@@ -23,8 +23,8 @@ iv_debug_overlay* interfaces::debug_overlay = nullptr;
 IDirect3DDevice9* interfaces::directx = nullptr;
 
 void interfaces::initialize( ) {
-	client = reinterpret_cast< i_base_client_dll* >( utilities::game::capture_interface( "client_panorama.dll", "VClient018" ) );
-	entity_list = reinterpret_cast< i_client_entity_list* >( utilities::game::capture_interface( "client_panorama.dll", "VClientEntityList003" ) );
+	client = reinterpret_cast< i_base_client_dll* >( utilities::game::capture_interface( "client.dll", "VClient018" ) );
+	entity_list = reinterpret_cast< i_client_entity_list* >( utilities::game::capture_interface( "client.dll", "VClientEntityList003" ) );
 	engine = reinterpret_cast< iv_engine_client* >( utilities::game::capture_interface( "engine.dll", "VEngineClient014" ) );
 	panel = reinterpret_cast< i_panel* >( utilities::game::capture_interface( "vgui2.dll", "VGUI_Panel009" ) );
 	surface = reinterpret_cast< i_surface* >( utilities::game::capture_interface( "vguimatsurface.dll", "VGUI_Surface031" ) );
@@ -43,5 +43,5 @@ void interfaces::initialize( ) {
 	clientstate = **( i_client_state*** ) ( utilities::pattern_scan( GetModuleHandleA( "engine.dll" ), "A1 ? ? ? ? 8B 80 ? ? ? ? C3" ) + 1 );
 	globals = **reinterpret_cast< c_global_vars_base*** >( ( *reinterpret_cast< uintptr_t** >( client ) [ 0 ] + 27 ) );
 	directx = **( IDirect3DDevice9*** ) ( utilities::pattern_scan( GetModuleHandleA( "shaderapidx9.dll" ), "A1 ? ? ? ? 50 8B 08 FF 51 0C" ) + 1 );
-	input = *( i_input** ) ( utilities::pattern_scan( GetModuleHandleA( "client_panorama.dll" ), "B9 ? ? ? ? F3 0F 11 04 24 FF 50 10" ) + 1 );
+	input = *( i_input** ) ( utilities::pattern_scan( GetModuleHandleA( "client.dll" ), "B9 ? ? ? ? F3 0F 11 04 24 FF 50 10" ) + 1 );
 }

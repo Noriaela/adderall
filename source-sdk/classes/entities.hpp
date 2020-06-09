@@ -163,13 +163,13 @@ public:
 
 	void set_angles( vec3_t angles ) {
 		using original_fn = void( __thiscall* )( void*, const vec3_t& );
-		static original_fn set_angles_fn = ( original_fn ) ( ( DWORD ) utilities::pattern_scan( GetModuleHandleA( "client_panorama.dll" ), "55 8B EC 83 E4 F8 83 EC 64 53 56 57 8B F1" ) );
+		static original_fn set_angles_fn = ( original_fn ) ( ( DWORD ) utilities::pattern_scan( GetModuleHandleA( "client.dll" ), "55 8B EC 83 E4 F8 83 EC 64 53 56 57 8B F1" ) );
 		set_angles_fn( this, angles );
 	}
 
 	void set_position( vec3_t position ) {
 		using original_fn = void( __thiscall* )( void*, const vec3_t& );
-		static original_fn set_position_fn = ( original_fn ) ( ( DWORD ) utilities::pattern_scan( GetModuleHandleA( "client_panorama.dll" ), "55 8B EC 83 E4 F8 51 53 56 57 8B F1 E8" ) );
+		static original_fn set_position_fn = ( original_fn ) ( ( DWORD ) utilities::pattern_scan( GetModuleHandleA( "client.dll" ), "55 8B EC 83 E4 F8 51 53 56 57 8B F1 E8" ) );
 		set_position_fn( this, position );
 	}
 
@@ -214,7 +214,7 @@ public:
 
 	weapon_info_t* get_weapon_data( ) {
 		using original_fn = weapon_info_t * ( __thiscall* )( void* );
-		static original_fn return_func = ( original_fn ) ( ( DWORD ) utilities::pattern_scan( GetModuleHandleA( "client_panorama.dll" ), "55 8B EC 81 EC ? ? ? ? 53 8B D9 56 57 8D 8B" ) );
+		static original_fn return_func = ( original_fn ) ( ( DWORD ) utilities::pattern_scan( GetModuleHandleA( "client.dll" ), "55 8B EC 81 EC ? ? ? ? 53 8B D9 56 57 8D 8B" ) );
 
 		return return_func( this );
 
