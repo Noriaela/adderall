@@ -3,7 +3,7 @@
 
 class c_menu {
 public:
-	void render( );
+	static void render( );
 };
 
-extern c_menu g_menu;
+inline c_menu g_menu{ };

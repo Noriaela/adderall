@@ -1,7 +1,5 @@
 #include "menu.hpp"
 
-c_menu g_menu;
-
 static bool test_checkbox;
 static int test_int;
 

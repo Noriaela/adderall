@@ -23,7 +23,7 @@ public:
 	recv_prop* get_prop( unsigned int hash );
 };
 
-extern netvar_manager g_netvar_mgr;
+inline netvar_manager g_netvar_mgr{ };
 
 #define offset_fn(type, var, offset) \
 	type& var() { \

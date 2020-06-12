@@ -4,6 +4,9 @@
 #include "..//..//source-sdk/misc/color.hpp"
 
 namespace render {
+	// Learn how to properly use classes and you'll be able to make everything within there static and also have
+	// some elegant usage of unnamed enums
+
 	enum font_flags {
 		fontflag_none,
 		fontflag_italic = 0x001,
@@ -20,7 +23,7 @@ namespace render {
 		fontflag_bitmap = 0x800,
 	};
 
-	extern unsigned long main_font;
+	inline unsigned long main_font{ };
 
 	void setup_fonts();
 
