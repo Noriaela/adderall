@@ -3,37 +3,22 @@
 #include "../../dependencies/common_includes.hpp"
 #include <algorithm>
 
-std::unique_ptr<vmt_hook> hooks::client_hook;
-std::unique_ptr<vmt_hook> hooks::clientmode_hook;
-std::unique_ptr<vmt_hook> hooks::panel_hook;
-std::unique_ptr<vmt_hook> hooks::renderview_hook;
-std::unique_ptr<vmt_hook> hooks::surface_hook;
-WNDPROC hooks::wndproc_original = NULL;
-
-c_settings set;
-
 void hooks::initialize( ) {
-	client_hook = std::make_unique<vmt_hook>( );
-	clientmode_hook = std::make_unique<vmt_hook>( );
-	panel_hook = std::make_unique<vmt_hook>( );
-	renderview_hook = std::make_unique<vmt_hook>( );
-	surface_hook = std::make_unique<vmt_hook>();
+	client_hook.setup(interfaces::client);
+	client_hook.hook_index(37, frame_stage_notify);
 
-	client_hook->setup( interfaces::client );
-	client_hook->hook_index( 37, reinterpret_cast< void* >( frame_stage_notify ) );
+	clientmode_hook.setup(interfaces::clientmode );
+	clientmode_hook.hook_index(24, create_move);
+	clientmode_hook.hook_index(35, viewmodel_fov);
 
-	clientmode_hook->setup( interfaces::clientmode );
-	clientmode_hook->hook_index( 24, reinterpret_cast< void* >( create_move ) );
-	clientmode_hook->hook_index(35, reinterpret_cast<void*>(viewmodel_fov));
+	panel_hook.setup(interfaces::panel);
+	panel_hook.hook_index( 41, paint_traverse);
 
-	panel_hook->setup( interfaces::panel );
-	panel_hook->hook_index( 41, reinterpret_cast< void* >( paint_traverse ) );
+	renderview_hook.setup(interfaces::render_view);
+	renderview_hook.hook_index(9, scene_end);
 
-	renderview_hook->setup( interfaces::render_view );
-	renderview_hook->hook_index( 9, reinterpret_cast< void* >( scene_end ) );
-
-	surface_hook->setup(interfaces::surface);
-	surface_hook->hook_index(67, reinterpret_cast<void*>(lock_cursor));
+	surface_hook.setup(interfaces::surface);
+	surface_hook.hook_index(67, lock_cursor);
 
 	wndproc_original = reinterpret_cast< WNDPROC >( SetWindowLongPtrA( FindWindow( "Valve001", NULL ), GWL_WNDPROC, reinterpret_cast< LONG >( wndproc ) ) );
 
@@ -55,25 +40,25 @@ void hooks::initialize( ) {
 }
 
 void hooks::shutdown( ) {
-	client_hook->release( );
-	clientmode_hook->release( );
-	panel_hook->release( );
-	renderview_hook->release( );
-	surface_hook->release();
+	client_hook.release( );
+	clientmode_hook.release( );
+	panel_hook.release( );
+	renderview_hook.release( );
+	surface_hook.release();
 
 	SetWindowLongPtrA( FindWindow( "Valve001", NULL ), GWL_WNDPROC, reinterpret_cast< LONG >( wndproc_original ) );
 }
 
 bool __stdcall hooks::create_move( float frame_time, c_usercmd* cmd ) {
-	static auto original_fn = reinterpret_cast<create_move_fn>(clientmode_hook->get_original(24));
+	static auto original_fn = reinterpret_cast<create_move_fn>(clientmode_hook.get_original(24));
 	auto local_player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(interfaces::engine->get_local_player()));
 	original_fn(interfaces::clientmode, frame_time, cmd);//Apparently a fix [pasted from https://github.com/designer1337/aristois-legit]
 	
 	if ( !cmd || !cmd->command_number )
-		return original_fn;
+		return false;
 
 	if ( !interfaces::entity_list->get_client_entity( interfaces::engine->get_local_player( ) ) )
-		return original_fn;
+		return false;
 
 	// misc
 	movement.do_bhop(cmd);
@@ -81,7 +66,7 @@ bool __stdcall hooks::create_move( float frame_time, c_usercmd* cmd ) {
 	// clamping movement
 	cmd->forward_move = std::clamp(cmd->forward_move, -450.0f, 450.0f);
 	cmd->side_move = std::clamp(cmd->side_move, -450.0f, 450.0f);
-	cmd->up_move = std::clamp(cmd->up_move, -450.0f, 450.0f);
+	cmd->up_move = std::clamp(cmd->up_move, -320.f, 320.f);
 
 	// clamping angles
 	cmd->view_angles.x = std::clamp(cmd->view_angles.x, -89.0f, 89.0f);
@@ -98,23 +83,22 @@ float __stdcall hooks::viewmodel_fov() {
 		return 68.f + set.misc.viewmodel_fov;
 	else
 		return 68.f;
-
 }
 
 void __stdcall hooks::frame_stage_notify( int frame_stage ) {
-	reinterpret_cast< frame_stage_notify_fn >( client_hook->get_original( 37 ) )( interfaces::client, frame_stage );
+	reinterpret_cast< frame_stage_notify_fn >( client_hook.get_original( 37 ) )( interfaces::client, frame_stage );
 }
 
 void __stdcall hooks::paint_traverse( unsigned int panel, bool force_repaint, bool allow_force ) {
 	std::string panel_name = interfaces::panel->get_panel_name( panel );
 
-	reinterpret_cast< paint_traverse_fn >( panel_hook->get_original( 41 ) )( interfaces::panel, panel, force_repaint, allow_force );
+	reinterpret_cast< paint_traverse_fn >( panel_hook.get_original( 41 ) )( interfaces::panel, panel, force_repaint, allow_force );
 
 	static unsigned int _panel = 0;
 	static bool once = false;
 
 	if ( !once ) {
-		char* panel_char = ( char* )( interfaces::panel->get_panel_name( panel ) );
+		const char* panel_char = interfaces::panel->get_panel_name( panel );
 		if ( strstr( panel_char, "MatSystemTopPanel" ) ) {
 			_panel = panel;
 			once = true;
@@ -126,11 +110,11 @@ void __stdcall hooks::paint_traverse( unsigned int panel, bool force_repaint, bo
 }
 
 void __stdcall hooks::scene_end( ) {
-	reinterpret_cast< scene_end_fn >( renderview_hook->get_original( 9 ) )( interfaces::render_view );
+	reinterpret_cast< scene_end_fn >( renderview_hook.get_original( 9 ) )( interfaces::render_view );
 }
 
 void __stdcall hooks::lock_cursor() {
-	static auto original_fn = reinterpret_cast<lock_cursor_fn>(surface_hook->get_original(67));
+	static auto original_fn = reinterpret_cast<lock_cursor_fn>(surface_hook.get_original(67));
 
 	if (set.menu.menu_opened) {
 		interfaces::surface->unlock_cursor();

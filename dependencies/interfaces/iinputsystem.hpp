@@ -28,7 +28,7 @@ enum {
 	JOYSTICK_AXIS_BUTTON_COUNT = MAX_JOYSTICK_AXES * 2,
 };
 
-enum ButtonCode_t : int {
+enum class ButtonCode_t : int {
 	BUTTON_CODE_INVALID = -1,
 	BUTTON_CODE_NONE = 0,
 
@@ -206,12 +206,12 @@ enum ButtonCode_t : int {
 
 class i_inputsytem {
 public:
-	void enable_input(bool bEnable) {
+	constexpr void enable_input(bool bEnable) {
 		using original_fn = void(__thiscall*)(void*, bool);
 		return (*(original_fn * *)this)[11](this, bEnable);
 	}
 
-	bool is_button_down(ButtonCode_t code) {
+	constexpr bool is_button_down(ButtonCode_t code) {
 		using original_fn = bool(__thiscall*)(void*, ButtonCode_t);
 		return (*(original_fn * *)this)[15](this, code);
 	}

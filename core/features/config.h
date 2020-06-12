@@ -39,4 +39,4 @@ public:
 
 };
 
-extern c_settings set;
+inline c_settings set{ };

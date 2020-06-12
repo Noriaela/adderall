@@ -24,26 +24,26 @@
 #pragma comment(lib, "d3dx9.lib")
 
 namespace interfaces {
-	extern i_base_client_dll* client;
-	extern i_input* input;
-	extern i_client_entity_list* entity_list;
-	extern iv_engine_client* engine;
-	extern i_client_mode* clientmode;
-	extern i_client_state* clientstate;
-	extern i_panel* panel;
-	extern i_surface* surface;
-	extern c_global_vars_base* globals;
-	extern i_material_system* material_system;
-	extern iv_model_info* model_info;
-	extern iv_model_render* model_render;
-	extern void* render_view;
-	extern iv_effects* effects;
-	extern iv_debug_overlay* debug_overlay;
-	extern i_console* console;
-	extern i_localize* localize;
-	extern i_game_event_manager* event_manager;
-	extern i_inputsytem* inputsystem;
-	extern IDirect3DDevice9* directx;
+	inline i_base_client_dll* client{ };
+	inline i_input* input{ };
+	inline i_client_entity_list* entity_list{ };
+	inline iv_engine_client* engine{ };
+	inline i_client_mode* clientmode{ };
+	inline i_client_state* clientstate{ };
+	inline i_panel* panel{ };
+	inline i_surface* surface{ };
+	inline c_global_vars_base* globals{ };
+	inline i_material_system* material_system{ };
+	inline iv_model_info* model_info{ };
+	inline iv_model_render* model_render{ };
+	inline void* render_view{ };
+	inline iv_effects* effects{ };
+	inline iv_debug_overlay* debug_overlay{ };
+	inline i_console* console{ };
+	inline i_localize* localize{ };
+	inline i_game_event_manager* event_manager{ };
+	inline i_inputsytem* inputsystem{ };
+	inline IDirect3DDevice9* directx{ };
 
 	void initialize( );
 }

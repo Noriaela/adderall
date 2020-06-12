@@ -1,7 +1,5 @@
 #include "render.hpp"
 
-unsigned long render::main_font;
-
 void render::setup_fonts() {
 	main_font = interfaces::surface->font_create();
 
